@@ -1,0 +1,29 @@
+'use client'
+
+import React from 'react'
+
+function AddMoney(props: any) {
+  return (
+    <>
+      
+      <div className=' absolute top-1/2 left-[39%] h-40 w-96 border-2 bg-green-800 flex flex-col justify-center items-center rounded-xl'>
+
+        <div className="w-full flex flex-row justify-center items-center my-3 ">
+  
+            <p className="mx-2 text-base font-bold">Bet Amount</p>
+            
+            <input type="number" defaultValue={0.00} className="mx-2 h-9 w-36 p-2 text-sm border border-white rounded-md text-white font-bold bg-black"/>
+            
+        </div>
+
+        <button className="h-10 w-44 my-3 bg-yellow-950 text-white rounded-lg" onClick={props.addButton}>
+            Add
+        </button>
+
+      </div>
+
+    </>
+  )
+}
+
+export default AddMoney

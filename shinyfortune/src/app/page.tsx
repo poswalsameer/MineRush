@@ -1,16 +1,52 @@
+'use client'
+
+import { useState } from "react";
+import AddMoney from "./components/AddMoney";
+
+
 export default function Home() {
+
+  const [addMoneyButton, setAddMoneyButton] = useState(false);
+
+  const addMoneyButtonClicked = () => {
+    setAddMoneyButton(true);
+  }
+
+  const addButtonClicked = () => {
+    setAddMoneyButton(false);
+  }
+
   return (
     <>
+      {/* { addMoneyButton && < AddMoney /> } */}
 
-      <div className="h-screen w-full bg-black flex flex-col justify-center items-center">
+      <div className={`h-screen w-full bg-black flex flex-col justify-center items-center ${ addMoneyButton ? 'blur-sm' : '' } `}>
 
         <h1 className="my-6 text-5xl text-white font-extrabold" > SHINY FORTUNE </h1>
+
+        {/* WALLET LAYOUT AND UI */}
+        <div className="top-12 right-16 h-12 w-64 bg-blue-950 rounded-lg absolute flex justify-center items-center">
+
+          <div className="flex justify-center items-center h-full w-1/2">
+            WALLET
+          </div>
+
+          <div className=" h-full w-[34%] bg-red-400 flex justify-center items-center ">
+              0.00
+          </div>
+
+          <div className=" h-full w-[16%] flex justify-center items-center bg-slate-800 rounded-r-lg">
+              <button onClick={addMoneyButtonClicked}>+</button>
+          </div>
+
+        </div>
 
         <div className="my-4 h-[33rem] w-[80rem] bg-blue-950 rounded-xl flex flex-row justify-between items-center" >
 
           {/* bet amount wala box */}
           <div className=" flex flex-col justify-center items-center ml-10 h-[26rem] w-[30rem] bg-green-800 rounded-2xl">
 
+            {/* BET AMOUNT FIELD */}
             <div className="w-full flex flex-row justify-between items-center my-5 ">
 
               {/* <div className="w-1/2 "> */}
@@ -23,6 +59,7 @@ export default function Home() {
 
             </div>
 
+            {/* NUMBER OF MINES FIELD */}
             <div className="w-full flex flex-row justify-between items-center my-5">
 
               {/* <div className="w-1/2"> */}
@@ -60,8 +97,23 @@ export default function Home() {
 
             </div>
 
+            {/* PROFIT BOX */}
+            <div className="w-full flex flex-row justify-between items-center my-5 ">
+
+              {/* <div className="w-1/2 "> */}
+                <p className=" ml-20 text-lg font-bold">Profit</p>
+              {/* </div> */}
+
+              {/* <div className="w-1/2"> */}
+               <div className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black"></div>
+              {/* </div> */}
+
+            </div>
+
+            {/* BET BUTTON */}
             <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" >BET</button>
 
+            {/* BUTTON FOR RE SHUFFLE THE BOARD */}
             <button className="h-10 w-80 my-2 bg-yellow-950 text-white rounded-lg" >Re-Shuffle Board</button>
 
 
@@ -102,6 +154,8 @@ export default function Home() {
 
         
       </div>
+
+      { addMoneyButton && < AddMoney addButton={addButtonClicked} /> }
 
     </>
   );
