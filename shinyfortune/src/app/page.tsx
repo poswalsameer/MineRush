@@ -11,10 +11,7 @@ export default function Home() {
   // const [amountInWallet, setAmountInWallet] = useState<number>(0);
 
   //STATE FOR AMOUNT SHOWING IN WALLET AND ALSO SAVING IT IN THE LOCAL STORAGE FOR FUTURE USE
-  const [amountInWallet, setAmountInWallet] = useState<number>(() => {
-      const savedAmount = localStorage.getItem('amountInWallet');
-      return savedAmount !== null ? JSON.parse(savedAmount) : 0;
-  });
+  const [amountInWallet, setAmountInWallet] = useState<number | null>(null);
 
   const [addAmountField, setAddAmountField] = useState<string>('');
 
@@ -23,12 +20,31 @@ export default function Home() {
   const [activeBet, setActiveBet] = useState<boolean>(false);
   const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
 
-  const [profit, setProfit] = useState<Number>(0.00)
+  const [profit, setProfit] = useState<number>(0.00);
+
+  const [isClient, setIsClient] = useState<boolean>(false);
+
+  //SETTING ISCLIENT TO TRUE WHEN THE COMPONENT LOADS ON CLIENT SIDE
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   //USE EFFECT TO SET THE NEW AMOUNT IN LOCAL STORAGE WHENEVER THE AMOUNT IN WALLET CHANGES
   useEffect(() => {
-      localStorage.setItem('amountInWallet', JSON.stringify(amountInWallet));
-  }, [amountInWallet]);
+    if (isClient) {
+      const storedAmount = localStorage.getItem('walletAmount');
+      if (storedAmount) {
+        setAmountInWallet(JSON.parse(storedAmount));
+      }
+    }
+  }, [isClient]);
+
+  useEffect(() => {
+
+      if( isClient ){
+        localStorage.setItem('walletAmount', JSON.stringify(amountInWallet));
+      }
+  }, [amountInWallet, isClient]);
 
 
 
@@ -38,15 +54,21 @@ export default function Home() {
 
   //FUNCTION WHICH IS HANDLING THE ADD BUTTON ON ADD MONEY COMPONENT AND ADDING THE AMOUNT TO WALLET
   const addButtonClicked = () => {
-    setAmountInWallet( prev => prev + Number(addAmountField) );
+    // setAmountInWallet( prev => prev! + Number(addAmountField) );
+
+    setAmountInWallet( prevAmount => {
+      const updatedAmount = (prevAmount !== null ? prevAmount + Number(addAmountField) : amountInWallet);
+      return parseFloat(updatedAmount!.toFixed(2)); 
+    } )
+
     setAddMoneyButton(false);
     setAddAmountField('');
   }
 
   //FUNCTION HANDLING THE BET BUTTON AND IT WILL SUBTRACT THE BET AMOUNT FROM THE AMOUNT IN WALLET ONLY IF AMOUNT IN WALLET IS GREATER THAN OR EQUAL TO THE BET AMOUNT
   const betButtonClicked = () => {
-    if( amountInWallet >= Number(betAmount) ){
-      setAmountInWallet( prev => prev - Number(betAmount) );
+    if( amountInWallet !== null && amountInWallet >= Number(betAmount) ){
+      setAmountInWallet( prev => prev! - Number(betAmount) );
 
       //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
       setActiveBet(true);
@@ -72,12 +94,12 @@ export default function Home() {
         {/* WALLET LAYOUT AND UI */}
         <div className="top-12 right-16 h-12 w-64 bg-blue-950 rounded-lg absolute flex justify-center items-center">
 
-          <div className="flex justify-center items-center h-full w-1/2">
+          <div className="flex justify-center items-center h-full w-[35%]">
             WALLET
           </div>
 
-          <div className=" h-full w-[34%] bg-red-400 font-bold flex justify-center items-center ">
-              {amountInWallet}
+          <div className=" h-full w-[50%] bg-red-400 font-bold flex justify-center items-center overflow-hidden">
+              <h1 className="px-10">{amountInWallet}</h1>
           </div>
 
           <div className=" h-full w-[16%] flex justify-center items-center bg-slate-800 rounded-r-lg">
@@ -145,13 +167,15 @@ export default function Home() {
             {/* PROFIT BOX */}
             <div className="w-full flex flex-row justify-between items-center my-5 ">
 
-              {/* <div className="w-1/2 "> */}
+              
                 <p className=" ml-20 text-lg font-bold">Profit</p>
-              {/* </div> */}
+              
 
-              {/* <div className="w-1/2"> */}
-               <div className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black">{profit}x</div>
-              {/* </div> */}
+              
+               <div className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black">
+                  {profit}x
+                </div>
+              
 
             </div>
 
