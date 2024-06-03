@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddMoney from "./components/AddMoney";
 
 
@@ -8,7 +8,14 @@ export default function Home() {
 
   const [addMoneyButton, setAddMoneyButton] = useState(false);
   
-  const [amountInWallet, setAmountInWallet] = useState<number>(0);
+  // const [amountInWallet, setAmountInWallet] = useState<number>(0);
+
+  //STATE FOR AMOUNT SHOWING IN WALLET AND ALSO SAVING IT IN THE LOCAL STORAGE FOR FUTURE USE
+  const [amountInWallet, setAmountInWallet] = useState<number>(() => {
+      const savedAmount = localStorage.getItem('amountInWallet');
+      return savedAmount !== null ? JSON.parse(savedAmount) : 0;
+  });
+
   const [addAmountField, setAddAmountField] = useState<string>('');
 
   const [betAmount, setBetAmount] = useState<string>('');
@@ -16,28 +23,43 @@ export default function Home() {
   const [activeBet, setActiveBet] = useState<boolean>(false);
   const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
 
+  const [profit, setProfit] = useState<Number>(0.00)
+
+  //USE EFFECT TO SET THE NEW AMOUNT IN LOCAL STORAGE WHENEVER THE AMOUNT IN WALLET CHANGES
+  useEffect(() => {
+      localStorage.setItem('amountInWallet', JSON.stringify(amountInWallet));
+  }, [amountInWallet]);
+
+
+
   const addMoneyButtonClicked = () => {
     setAddMoneyButton(true);
   }
 
-  //function which is handling the add button on Add Money component and adding the amount to wallet
+  //FUNCTION WHICH IS HANDLING THE ADD BUTTON ON ADD MONEY COMPONENT AND ADDING THE AMOUNT TO WALLET
   const addButtonClicked = () => {
     setAmountInWallet( prev => prev + Number(addAmountField) );
     setAddMoneyButton(false);
     setAddAmountField('');
   }
 
-  //function handling the bet button and it will subtract the bet amount from the amount in wallet only if amount in wallet is greater than or equal to the bet amount
+  //FUNCTION HANDLING THE BET BUTTON AND IT WILL SUBTRACT THE BET AMOUNT FROM THE AMOUNT IN WALLET ONLY IF AMOUNT IN WALLET IS GREATER THAN OR EQUAL TO THE BET AMOUNT
   const betButtonClicked = () => {
     if( amountInWallet >= Number(betAmount) ){
       setAmountInWallet( prev => prev - Number(betAmount) );
+
+      //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
+      setActiveBet(true);
+
+      //SWITCHING ON THE SHUFFLING BUTTON WHEN THE USER STARTS A BET
+      setShuffleAllowed(true);
     }
+    
+  }
 
-    //switching off the bet button when the user starts a bet
-    // setActiveBet(true);
-
-    //switching on the shuffling button when the user starts a bet
-    setShuffleAllowed(true);
+  //FUNCTION TO HANDLE THE LOGIC WHEN CASHOUT BUTTON IS CLICKED
+  const cashoutClicked = () => {
+    setActiveBet(false);
   }
 
   return (
@@ -128,17 +150,27 @@ export default function Home() {
               {/* </div> */}
 
               {/* <div className="w-1/2"> */}
-               <div className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black"></div>
+               <div className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black">{profit}x</div>
               {/* </div> */}
 
             </div>
 
             {/* BET BUTTON */}
-            <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" 
-            onClick={betButtonClicked} disabled={activeBet}
+
+            { activeBet ? ( <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" 
+            onClick={cashoutClicked}
             >
-              BET
-            </button>
+              CASHOUT
+            </button> ) : (
+
+              <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" 
+              onClick={betButtonClicked} disabled={activeBet}
+              >
+                BET
+              </button>
+
+            ) }
+            
 
             {/* BUTTON FOR RE SHUFFLE THE BOARD */}
             <button className="h-10 w-80 my-2 bg-yellow-950 text-white rounded-lg" 
