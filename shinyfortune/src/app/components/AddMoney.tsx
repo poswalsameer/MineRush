@@ -1,8 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 function AddMoney(props: any) {
+
   return (
     <>
       
@@ -12,7 +13,7 @@ function AddMoney(props: any) {
   
             <p className="mx-2 text-base font-bold">Bet Amount</p>
             
-            <input type="number" defaultValue={0.00} className="mx-2 h-9 w-36 p-2 text-sm border border-white rounded-md text-white font-bold bg-black"/>
+            <input type="number" className="mx-2 h-9 w-36 p-2 text-sm border border-white rounded-md text-white font-bold bg-black" value={props.addAmount} onChange={ props.addAmountOnChange }/>
             
         </div>
 

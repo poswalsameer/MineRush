@@ -7,18 +7,32 @@ import AddMoney from "./components/AddMoney";
 export default function Home() {
 
   const [addMoneyButton, setAddMoneyButton] = useState(false);
+  
+  const [amountInWallet, setAmountInWallet] = useState<number>(0);
+  const [addAmountField, setAddAmountField] = useState<string>('');
+
+  const [betAmount, setBetAmount] = useState<string>('');
 
   const addMoneyButtonClicked = () => {
     setAddMoneyButton(true);
   }
 
+  //function which is handling the add button on Add Money component and adding the amount to wallet
   const addButtonClicked = () => {
+    setAmountInWallet( prev => prev + Number(addAmountField) );
     setAddMoneyButton(false);
+    setAddAmountField('');
+  }
+
+  //function handling the bet button and it will subtract the bet amount from the amount in wallet only if amount in wallet is greater than or equal to the bet amount
+  const betButtonClicked = () => {
+    if( amountInWallet >= Number(betAmount) ){
+      setAmountInWallet( prev => prev - Number(betAmount) );
+    }
   }
 
   return (
     <>
-      {/* { addMoneyButton && < AddMoney /> } */}
 
       <div className={`h-screen w-full bg-black flex flex-col justify-center items-center ${ addMoneyButton ? 'blur-sm' : '' } `}>
 
@@ -31,8 +45,8 @@ export default function Home() {
             WALLET
           </div>
 
-          <div className=" h-full w-[34%] bg-red-400 flex justify-center items-center ">
-              0.00
+          <div className=" h-full w-[34%] bg-red-400 font-bold flex justify-center items-center ">
+              {amountInWallet}
           </div>
 
           <div className=" h-full w-[16%] flex justify-center items-center bg-slate-800 rounded-r-lg">
@@ -54,7 +68,7 @@ export default function Home() {
               {/* </div> */}
 
               {/* <div className="w-1/2"> */}
-               <input type="number" className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black"/>
+               <input type="number" className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black" value={betAmount} onChange={ (e) => setBetAmount(e.target.value) }/>
               {/* </div> */}
 
             </div>
@@ -111,7 +125,11 @@ export default function Home() {
             </div>
 
             {/* BET BUTTON */}
-            <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" >BET</button>
+            <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" 
+            onClick={betButtonClicked}
+            >
+              BET
+            </button>
 
             {/* BUTTON FOR RE SHUFFLE THE BOARD */}
             <button className="h-10 w-80 my-2 bg-yellow-950 text-white rounded-lg" >Re-Shuffle Board</button>
@@ -155,7 +173,7 @@ export default function Home() {
         
       </div>
 
-      { addMoneyButton && < AddMoney addButton={addButtonClicked} /> }
+      { addMoneyButton && < AddMoney addButton={addButtonClicked} addAmount={addAmountField} addAmountOnChange={ (e:any) => setAddAmountField( e.target.value ) } /> }
 
     </>
   );
