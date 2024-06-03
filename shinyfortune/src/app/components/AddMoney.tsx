@@ -17,9 +17,15 @@ function AddMoney(props: any) {
             
         </div>
 
-        <button className="h-10 w-44 my-3 bg-yellow-950 text-white rounded-lg" onClick={props.addButton}>
-            Add
-        </button>
+        <div className='flex justify-center items-center'>
+          <button className="h-10 w-24 m-3 bg-yellow-950 text-white rounded-lg" onClick={props.addButton}>
+              Add
+          </button>
+
+          <button className="h-10 w-24 m-3 bg-yellow-950 text-white rounded-lg" onClick={props.addButton}>
+            Close
+          </button>
+        </div>
 
       </div>
 

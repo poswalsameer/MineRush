@@ -13,6 +13,9 @@ export default function Home() {
 
   const [betAmount, setBetAmount] = useState<string>('');
 
+  const [activeBet, setActiveBet] = useState<boolean>(false);
+  const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
+
   const addMoneyButtonClicked = () => {
     setAddMoneyButton(true);
   }
@@ -29,6 +32,12 @@ export default function Home() {
     if( amountInWallet >= Number(betAmount) ){
       setAmountInWallet( prev => prev - Number(betAmount) );
     }
+
+    //switching off the bet button when the user starts a bet
+    // setActiveBet(true);
+
+    //switching on the shuffling button when the user starts a bet
+    setShuffleAllowed(true);
   }
 
   return (
@@ -126,13 +135,17 @@ export default function Home() {
 
             {/* BET BUTTON */}
             <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" 
-            onClick={betButtonClicked}
+            onClick={betButtonClicked} disabled={activeBet}
             >
               BET
             </button>
 
             {/* BUTTON FOR RE SHUFFLE THE BOARD */}
-            <button className="h-10 w-80 my-2 bg-yellow-950 text-white rounded-lg" >Re-Shuffle Board</button>
+            <button className="h-10 w-80 my-2 bg-yellow-950 text-white rounded-lg" 
+            disabled={!shuffleAllowed}
+            >
+              Re-Shuffle Board
+            </button>
 
 
           </div>
