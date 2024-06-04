@@ -13,7 +13,7 @@ export default function Home() {
   //STATE FOR AMOUNT SHOWING IN WALLET AND ALSO SAVING IT IN THE LOCAL STORAGE FOR FUTURE USE
   const [amountInWallet, setAmountInWallet] = useState<number | null>(null);
 
-  const [addAmountField, setAddAmountField] = useState<string>('');
+  const [addAmountField, setAddAmountField] = useState<number|null>(null);
 
   const [betAmount, setBetAmount] = useState<string>('');
 
@@ -54,21 +54,56 @@ export default function Home() {
 
   //FUNCTION WHICH IS HANDLING THE ADD BUTTON ON ADD MONEY COMPONENT AND ADDING THE AMOUNT TO WALLET
   const addButtonClicked = () => {
+
     // setAmountInWallet( prev => prev! + Number(addAmountField) );
 
+    // FUNCTION THAT SETS THE WALLET AMOUNT UPTO 2 DECIMAL PLACES AFTER ADDING MONEY IN THE WALLET
     setAmountInWallet( prevAmount => {
-      const updatedAmount = (prevAmount !== null ? prevAmount + Number(addAmountField) : amountInWallet);
-      return parseFloat(updatedAmount!.toFixed(2)); 
-    } )
+
+      let updatedAmount;
+
+      if( prevAmount !== null ){
+        updatedAmount = prevAmount + Number(addAmountField);
+      }
+      else{
+          updatedAmount = amountInWallet;
+      }
+
+      if( updatedAmount !== null ){
+        return parseFloat(updatedAmount.toFixed(2));
+      }
+      return amountInWallet;
+
+    })
 
     setAddMoneyButton(false);
-    setAddAmountField('');
+    setAddAmountField(null);
   }
 
   //FUNCTION HANDLING THE BET BUTTON AND IT WILL SUBTRACT THE BET AMOUNT FROM THE AMOUNT IN WALLET ONLY IF AMOUNT IN WALLET IS GREATER THAN OR EQUAL TO THE BET AMOUNT
   const betButtonClicked = () => {
     if( amountInWallet !== null && amountInWallet >= Number(betAmount) ){
-      setAmountInWallet( prev => prev! - Number(betAmount) );
+      // setAmountInWallet( prev => prev! - Number(betAmount) );
+
+      //LOGIC TO IMPLEMENT THE WALLET BALANCE UPTO 2 DECIMAL PLACES AFTER SUBTRACTING THE AMOUNT IN WALLET WITH BET AMOUNT
+      setAmountInWallet( prevAmount => {
+
+          let updatedAmountInWallet;
+
+          if( prevAmount !== null ){
+            updatedAmountInWallet = prevAmount - Number(betAmount);
+          }
+          else{
+            updatedAmountInWallet = amountInWallet;
+          }
+
+          if( updatedAmountInWallet !== null ){
+            return parseFloat(updatedAmountInWallet.toFixed(2));
+          }
+
+          return amountInWallet;
+
+      } )
 
       //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
       setActiveBet(true);
@@ -83,6 +118,8 @@ export default function Home() {
   const cashoutClicked = () => {
     setActiveBet(false);
   }
+
+  // localStorage.clear();
 
   return (
     <>
