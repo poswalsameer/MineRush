@@ -1,5 +1,6 @@
 'use client'
 
+import { Jersey_25 } from "next/font/google";
 import { useEffect, useState } from "react";
 import AddMoney from "./components/AddMoney";
 
@@ -16,6 +17,8 @@ export default function Home() {
   const [addAmountField, setAddAmountField] = useState<number|null>(null);
 
   const [betAmount, setBetAmount] = useState<string>('');
+  const [bomb, SetBomb] = useState<string>('3');
+  const[bombCount, SetBombCount] = useState<number[]>([]);
 
   const [activeBet, setActiveBet] = useState<boolean>(false);
   const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
@@ -23,6 +26,7 @@ export default function Home() {
   const [profit, setProfit] = useState<number>(0.00);
 
   const [isClient, setIsClient] = useState<boolean>(false);
+
 
   //SETTING ISCLIENT TO TRUE WHEN THE COMPONENT LOADS ON CLIENT SIDE
   useEffect(() => {
@@ -80,6 +84,11 @@ export default function Home() {
     setAddAmountField(null);
   }
 
+  //FUNCTION TO GENERATE A RANDOM NUMBER BETWEEN 0 AND 24
+  const generateRandomNumber = (): number => {
+    return Math.floor(Math.random() * (24 - 0 + 1)) + 0;
+  }
+
   //FUNCTION HANDLING THE BET BUTTON AND IT WILL SUBTRACT THE BET AMOUNT FROM THE AMOUNT IN WALLET ONLY IF AMOUNT IN WALLET IS GREATER THAN OR EQUAL TO THE BET AMOUNT
   const betButtonClicked = () => {
     if( amountInWallet !== null && amountInWallet >= Number(betAmount) ){
@@ -89,7 +98,6 @@ export default function Home() {
       setAmountInWallet( prevAmount => {
 
           let updatedAmountInWallet;
-
           if( prevAmount !== null ){
             updatedAmountInWallet = prevAmount - Number(betAmount);
           }
@@ -100,10 +108,17 @@ export default function Home() {
           if( updatedAmountInWallet !== null ){
             return parseFloat(updatedAmountInWallet.toFixed(2));
           }
-
           return amountInWallet;
-
       } )
+
+      let bombArr: number[] = [];
+
+      for(let i=0; i<Number(bomb); i++){
+        let randomNumber = generateRandomNumber();
+        bombArr.push(randomNumber);
+      }
+
+      SetBombCount(bombArr);
 
       //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
       setActiveBet(true);
@@ -119,7 +134,12 @@ export default function Home() {
     setActiveBet(false);
   }
 
+  //array of length 25 to display all div boxes through loop
+  const divs = Array.from({ length: 25 });
   // localStorage.clear();
+
+  console.log(bombCount);
+  
 
   return (
     <>
@@ -158,7 +178,7 @@ export default function Home() {
               {/* </div> */}
 
               {/* <div className="w-1/2"> */}
-               <input type="number" className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black" value={betAmount} onChange={ (e) => setBetAmount(e.target.value) }/>
+               <input type="number" className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black" value={betAmount} onChange={ (e) => setBetAmount(e.target.value) } disabled={activeBet}/>
               {/* </div> */}
 
             </div>
@@ -171,7 +191,9 @@ export default function Home() {
               {/* </div> */}
 
               {/* <div className="w-1/2"> */}
-                <select name="mine" id="min" className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black">
+                <select name="mine" id="min" className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black" value={bomb} disabled={activeBet}
+                onChange={ (e) => SetBomb(e.target.value) }
+                >
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -246,6 +268,19 @@ export default function Home() {
           {/* grid wala box */}
           <div className=" grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl">
 
+            { divs.map( (index:any) => (
+                bombCount.includes(index) ? (
+                  <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg " >
+                    <img src="bomb.png" alt="" />
+                  </div>
+                ) : (
+                  <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg " >
+                    <img src="gems.png" alt="" />
+                  </div>
+                )                
+            ))}
+
+            {/* <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
             <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
             <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
             <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
@@ -269,8 +304,7 @@ export default function Home() {
             <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
             <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
             <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
+            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div> */}
 
           </div>
 
