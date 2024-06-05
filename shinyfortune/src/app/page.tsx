@@ -85,9 +85,9 @@ export default function Home() {
   }
 
   //FUNCTION TO GENERATE A RANDOM NUMBER BETWEEN 0 AND 24
-  const generateRandomNumber = (): number => {
-    return Math.floor(Math.random() * (24 - 0 + 1)) + 0;
-  }
+    const generateRandomNumber = (): number => {
+      return Math.floor(Math.random() * 25)-1;
+    }
 
   //FUNCTION HANDLING THE BET BUTTON AND IT WILL SUBTRACT THE BET AMOUNT FROM THE AMOUNT IN WALLET ONLY IF AMOUNT IN WALLET IS GREATER THAN OR EQUAL TO THE BET AMOUNT
   const betButtonClicked = () => {
@@ -111,13 +111,17 @@ export default function Home() {
           return amountInWallet;
       } )
 
+      //ARRAY STORING THE INDEX WHERE BOMB WILL BE PLACED
       let bombArr: number[] = [];
 
-      for(let i=0; i<Number(bomb); i++){
+      //GENERATING RANDOM NUMBERS AND THEN STORING THEM IN THE BOMBCOUNT ARRAY
+      while (bombArr.length < Number(bomb)) {
         let randomNumber = generateRandomNumber();
-        bombArr.push(randomNumber);
+        if (!bombArr.includes(randomNumber)) {
+          bombArr.push(randomNumber);
+        }
       }
-
+      console.log("Generated bomb array:", bombArr); 
       SetBombCount(bombArr);
 
       //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
@@ -132,6 +136,20 @@ export default function Home() {
   //FUNCTION TO HANDLE THE LOGIC WHEN CASHOUT BUTTON IS CLICKED
   const cashoutClicked = () => {
     setActiveBet(false);
+  }
+
+
+  //FUNCTION WHICH WILL WORK WHEN A MINE IS CLICKED, LOGGING TO THE CONSOLE
+  const mineClicked = (index:number) => {
+
+      console.log("Clicked index:", index); 
+      console.log("Bomb count array:", bombCount); 
+      if (bombCount.includes(index)) {
+        console.log("Bomb Clicked");
+      } else {
+        console.log("Gem Clicked");
+      }
+
   }
 
   //array of length 25 to display all div boxes through loop
@@ -268,7 +286,7 @@ export default function Home() {
           {/* grid wala box */}
           <div className=" grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl">
 
-            { divs.map( (index:any) => (
+            {/* { divs.map( (index:any) => (
                 bombCount.includes(index) ? (
                   <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg " >
                     <img src="bomb.png" alt="" />
@@ -278,33 +296,13 @@ export default function Home() {
                     <img src="gems.png" alt="" />
                   </div>
                 )                
-            ))}
+            ))} */}
 
-            {/* <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div>
-            <div className="h-20 w-20 bg-red-500 rounded-lg " ></div> */}
+            { divs.map( (_, index) => (
+              <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900 " onClick={() => mineClicked(index)} >
+                
+              </div>
+            ) ) }
 
           </div>
 
