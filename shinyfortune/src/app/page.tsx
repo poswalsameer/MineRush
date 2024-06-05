@@ -3,6 +3,8 @@
 import { Jersey_25 } from "next/font/google";
 import { useEffect, useState } from "react";
 import AddMoney from "./components/AddMoney";
+// import bombImage from './public/bomb.png'; 
+// import gemImage from './public/gem.png'; 
 
 
 export default function Home() {
@@ -22,10 +24,13 @@ export default function Home() {
 
   const [activeBet, setActiveBet] = useState<boolean>(false);
   const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
+  const [isBombPresent, setIsBombPresent] = useState<boolean>(false);
 
   const [profit, setProfit] = useState<number>(0.00);
 
   const [isClient, setIsClient] = useState<boolean>(false);
+
+  const [clickedIndices, setClickedIndices] = useState<{ [key: number]: 'bomb' | 'gem' }>({});
 
 
   //SETTING ISCLIENT TO TRUE WHEN THE COMPONENT LOADS ON CLIENT SIDE
@@ -86,7 +91,7 @@ export default function Home() {
 
   //FUNCTION TO GENERATE A RANDOM NUMBER BETWEEN 0 AND 24
     const generateRandomNumber = (): number => {
-      return Math.floor(Math.random() * 25)-1;
+      return Math.floor(Math.random() * 25);
     }
 
   //FUNCTION HANDLING THE BET BUTTON AND IT WILL SUBTRACT THE BET AMOUNT FROM THE AMOUNT IN WALLET ONLY IF AMOUNT IN WALLET IS GREATER THAN OR EQUAL TO THE BET AMOUNT
@@ -142,13 +147,15 @@ export default function Home() {
   //FUNCTION WHICH WILL WORK WHEN A MINE IS CLICKED, LOGGING TO THE CONSOLE
   const mineClicked = (index:number) => {
 
-      console.log("Clicked index:", index); 
-      console.log("Bomb count array:", bombCount); 
-      if (bombCount.includes(index)) {
-        console.log("Bomb Clicked");
-      } else {
-        console.log("Gem Clicked");
-      }
+    console.log("Clicked index:", index);
+    console.log("Bomb count array:", bombCount);
+    if (bombCount.includes(index)) {
+      setClickedIndices(prev => ({ ...prev, [index]: 'bomb' }));
+      console.log("Bomb Clicked");
+    } else {
+      setClickedIndices(prev => ({ ...prev, [index]: 'gem' }));
+      console.log("Gem Clicked");
+    }
 
   }
 
@@ -286,23 +293,21 @@ export default function Home() {
           {/* grid wala box */}
           <div className=" grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl">
 
-            {/* { divs.map( (index:any) => (
-                bombCount.includes(index) ? (
-                  <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg " >
-                    <img src="bomb.png" alt="" />
-                  </div>
-                ) : (
-                  <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg " >
-                    <img src="gems.png" alt="" />
-                  </div>
-                )                
-            ))} */}
+            {/* LOOPING THROUGH THE DIV SHOW MINES */}
+            {divs.map((_, index) => {
+              const isClicked = clickedIndices.hasOwnProperty(index);
+              return (
+                <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900" onClick={() => mineClicked(index)}>
+                  {isClicked && (
 
-            { divs.map( (_, index) => (
-              <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900 " onClick={() => mineClicked(index)} >
-                
-              </div>
-            ) ) }
+                    //SHOWING IMAGE OF GEM OR BOMB ACCORDING TO THE INDEX CLICKED
+                    <img src={clickedIndices[index] === 'bomb' ? 'bomb.png': 'gems.png'} alt={clickedIndices[index]} 
+                    className=""
+                    />
+                  )}
+                </div>
+              );
+            })}
 
           </div>
 
