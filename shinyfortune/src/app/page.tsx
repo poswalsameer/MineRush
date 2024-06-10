@@ -3,13 +3,17 @@
 import { Jersey_25 } from "next/font/google";
 import { useEffect, useState } from "react";
 import AddMoney from "./components/AddMoney";
+import Winning from "./components/Winning";
 // import bombImage from './public/bomb.png'; 
 // import gemImage from './public/gem.png'; 
+import { oneBombArr, twoBombArr, threeBombArr, fourBombArr, fiveBombArr, sixBombArr, sevenBombArr, eightBombArr, nineBombArr, tenBombArr, elevenBombArr, twelveBombArr, thirteenBombArr, fourteenBombArr, fifteenBombArr, sixteenBombArr, seventeenBombArr, eighteenBombArr, nineteenBombArr, twentyBombArr, twentyOneBombArr, twentyTwoBombArr, twentyThreeBombArr, twentyFourBombArr } from "./utils/multiplier";
 
 
 export default function Home() {
 
   const [addMoneyButton, setAddMoneyButton] = useState(false);
+
+  const [winningPopUp, setWinningPopUp] = useState<boolean>(false);
   
   // const [amountInWallet, setAmountInWallet] = useState<number>(0);
 
@@ -31,7 +35,6 @@ export default function Home() {
   const [isClient, setIsClient] = useState<boolean>(false);
 
   const [clickedIndices, setClickedIndices] = useState<{ [key: number]: 'bomb' | 'gem' }>({});
-
 
   //SETTING ISCLIENT TO TRUE WHEN THE COMPONENT LOADS ON CLIENT SIDE
   useEffect(() => {
@@ -141,6 +144,7 @@ export default function Home() {
   //FUNCTION TO HANDLE THE LOGIC WHEN CASHOUT BUTTON IS CLICKED
   const cashoutClicked = () => {
     setActiveBet(false);
+    setWinningPopUp(true);
   }
 
   const clickingMine = (index:any) => {
@@ -282,7 +286,7 @@ export default function Home() {
               CASHOUT
             </button> ) : (
 
-              <button className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg" 
+              <button className={`h-10 w-80 my-5 bg-green-950 text-white rounded-lg`} 
               onClick={betButtonClicked} disabled={activeBet}
               >
                 BET
@@ -302,7 +306,7 @@ export default function Home() {
           </div>
 
           {/* grid wala box */}
-          <div className=" grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl">
+          <div className={`grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl ${winningPopUp ? 'blur-sm' : '' } `}>
 
             {/* LOOPING THROUGH THE DIV SHOW MINES */}
             {divs.map((_, index) => {
@@ -328,6 +332,9 @@ export default function Home() {
       </div>
 
       { addMoneyButton && < AddMoney addButton={addButtonClicked} addAmount={addAmountField} addAmountOnChange={ (e:any) => setAddAmountField( e.target.value ) } /> }
+
+      {/* WINNING COMPONENT */}
+      { winningPopUp && <Winning /> }
 
     </>
   );
