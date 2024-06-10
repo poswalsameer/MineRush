@@ -143,6 +143,17 @@ export default function Home() {
     setActiveBet(false);
   }
 
+  const clickingMine = (index:any) => {
+
+    // () => mineClicked(index)
+
+    //mine is clickable only when a bet is active
+    if( activeBet ){
+      mineClicked(index)
+    }
+
+  }
+
 
   //FUNCTION WHICH WILL WORK WHEN A MINE IS CLICKED, LOGGING TO THE CONSOLE
   const mineClicked = (index:number) => {
@@ -297,12 +308,12 @@ export default function Home() {
             {divs.map((_, index) => {
               const isClicked = clickedIndices.hasOwnProperty(index);
               return (
-                <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900" onClick={() => mineClicked(index)}>
+                <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900" onClick={() => clickingMine(index)}>
                   {isClicked && (
 
                     //SHOWING IMAGE OF GEM OR BOMB ACCORDING TO THE INDEX CLICKED
                     <img src={clickedIndices[index] === 'bomb' ? 'bomb.png': 'gems.png'} alt={clickedIndices[index]} 
-                    className=""
+                    className={`${clickedIndices[index] === 'bomb' ? 'mr-1 image-size' : 'ml-1'}`}
                     />
                   )}
                 </div>

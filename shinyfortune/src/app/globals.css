@@ -31,3 +31,9 @@ body {
     text-wrap: balance;
   }
 }
+
+.image-size {
+  width: 55px; /* Adjust the size as needed */
+  height: 55px; /* Adjust the size as needed */
+  object-fit: cover; /* Ensures the image covers the given dimensions */
+}
