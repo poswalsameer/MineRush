@@ -8,12 +8,19 @@ import Winning from "./components/Winning";
 // import gemImage from './public/gem.png'; 
 import { oneBombArr, twoBombArr, threeBombArr, fourBombArr, fiveBombArr, sixBombArr, sevenBombArr, eightBombArr, nineBombArr, tenBombArr, elevenBombArr, twelveBombArr, thirteenBombArr, fourteenBombArr, fifteenBombArr, sixteenBombArr, seventeenBombArr, eighteenBombArr, nineteenBombArr, twentyBombArr, twentyOneBombArr, twentyTwoBombArr, twentyThreeBombArr, twentyFourBombArr } from "./utils/multiplier";
 
+// import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import AlertBox from "./components/AlertBox";
 
 export default function Home() {
 
   const [addMoneyButton, setAddMoneyButton] = useState(false);
-
   const [winningPopUp, setWinningPopUp] = useState<boolean>(false);
+  const [betAmountAlert, setBetAmountAlert] = useState<boolean>(false);
+  const [bombClicked, setBombClicked] = useState<boolean>(false);
+  const [activeBet, setActiveBet] = useState<boolean>(false);
+  const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [isBombPresent, setIsBombPresent] = useState<boolean>(false);
   
   // const [amountInWallet, setAmountInWallet] = useState<number>(0);
 
@@ -25,14 +32,8 @@ export default function Home() {
   const [betAmount, setBetAmount] = useState<string>('');
   const [bomb, SetBomb] = useState<string>('3');
   const[bombCount, SetBombCount] = useState<number[]>([]);
-
-  const [activeBet, setActiveBet] = useState<boolean>(false);
-  const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
-  const [isBombPresent, setIsBombPresent] = useState<boolean>(false);
-
+  
   const [profit, setProfit] = useState<number>(0.00);
-
-  const [isClient, setIsClient] = useState<boolean>(false);
 
   const [clickedIndices, setClickedIndices] = useState<{ [key: number]: 'bomb' | 'gem' }>({});
 
@@ -99,46 +100,61 @@ export default function Home() {
 
   //FUNCTION HANDLING THE BET BUTTON AND IT WILL SUBTRACT THE BET AMOUNT FROM THE AMOUNT IN WALLET ONLY IF AMOUNT IN WALLET IS GREATER THAN OR EQUAL TO THE BET AMOUNT
   const betButtonClicked = () => {
-    if( amountInWallet !== null && amountInWallet >= Number(betAmount) ){
-      // setAmountInWallet( prev => prev! - Number(betAmount) );
 
-      //LOGIC TO IMPLEMENT THE WALLET BALANCE UPTO 2 DECIMAL PLACES AFTER SUBTRACTING THE AMOUNT IN WALLET WITH BET AMOUNT
-      setAmountInWallet( prevAmount => {
-
-          let updatedAmountInWallet;
-          if( prevAmount !== null ){
-            updatedAmountInWallet = prevAmount - Number(betAmount);
-          }
-          else{
-            updatedAmountInWallet = amountInWallet;
-          }
-
-          if( updatedAmountInWallet !== null ){
-            return parseFloat(updatedAmountInWallet.toFixed(2));
-          }
-          return amountInWallet;
-      } )
-
-      //ARRAY STORING THE INDEX WHERE BOMB WILL BE PLACED
-      let bombArr: number[] = [];
-
-      //GENERATING RANDOM NUMBERS AND THEN STORING THEM IN THE BOMBCOUNT ARRAY
-      while (bombArr.length < Number(bomb)) {
-        let randomNumber = generateRandomNumber();
-        if (!bombArr.includes(randomNumber)) {
-          bombArr.push(randomNumber);
-        }
-      }
-      console.log("Generated bomb array:", bombArr); 
-      SetBombCount(bombArr);
-
-      //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
-      setActiveBet(true);
-
-      //SWITCHING ON THE SHUFFLING BUTTON WHEN THE USER STARTS A BET
-      setShuffleAllowed(true);
+    if( betAmount === '' ){
+      setBetAmountAlert(true);
+      console.log("bet amount is not entered");
+      
     }
-    
+    else{
+
+      if( amountInWallet !== null && amountInWallet >= Number(betAmount) ){
+        // setAmountInWallet( prev => prev! - Number(betAmount) );
+  
+        //LOGIC TO IMPLEMENT THE WALLET BALANCE UPTO 2 DECIMAL PLACES AFTER SUBTRACTING THE AMOUNT IN WALLET WITH BET AMOUNT
+        setAmountInWallet( prevAmount => {
+  
+            let updatedAmountInWallet;
+            if( prevAmount !== null ){
+              updatedAmountInWallet = prevAmount - Number(betAmount);
+            }
+            else{
+              updatedAmountInWallet = amountInWallet;
+            }
+  
+            if( updatedAmountInWallet !== null ){
+              return parseFloat(updatedAmountInWallet.toFixed(2));
+            }
+            return amountInWallet;
+        } )
+  
+        //ARRAY STORING THE INDEX WHERE BOMB WILL BE PLACED
+        let bombArr: number[] = [];
+  
+        //GENERATING RANDOM NUMBERS AND THEN STORING THEM IN THE BOMBCOUNT ARRAY
+        while (bombArr.length < Number(bomb)) {
+          let randomNumber = generateRandomNumber();
+          if (!bombArr.includes(randomNumber)) {
+            bombArr.push(randomNumber);
+          }
+        }
+        console.log("Generated bomb array:", bombArr); 
+        SetBombCount(bombArr);
+  
+        //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
+        setActiveBet(true);
+        setBombClicked(false);
+        console.log("new bet started and active bet is ON");
+        
+  
+        //SWITCHING ON THE SHUFFLING BUTTON WHEN THE USER STARTS A BET
+        setShuffleAllowed(true);
+  
+        setWinningPopUp(false);
+      }
+
+    }
+  
   }
 
   //FUNCTION TO HANDLE THE LOGIC WHEN CASHOUT BUTTON IS CLICKED
@@ -172,6 +188,13 @@ export default function Home() {
       console.log("Gem Clicked");
     }
 
+    if(bombCount.includes(index)){
+      setBombClicked(true);
+      setActiveBet(false);
+      console.log("bet has been set to false again");
+      
+    }
+
   }
 
   //array of length 25 to display all div boxes through loop
@@ -179,10 +202,17 @@ export default function Home() {
   // localStorage.clear();
 
   console.log(bombCount);
+
+  const closeAlertClicked = () => {
+    setBetAmountAlert(false);
+  }
   
 
   return (
     <>
+
+      { betAmountAlert && < AlertBox closeAlertBox={closeAlertClicked}/> } 
+
 
       <div className={`h-screen w-full bg-black flex flex-col justify-center items-center ${ addMoneyButton ? 'blur-sm' : '' } `}>
 
@@ -306,9 +336,9 @@ export default function Home() {
           </div>
 
           {/* grid wala box */}
-          <div className={`grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl ${winningPopUp ? 'blur-sm' : '' } `}>
+          <div className={`grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl ${winningPopUp ? 'blur-sm' : '' } ${ bombClicked ? 'blur-sm' : '' } `}>
 
-            {/* LOOPING THROUGH THE DIV SHOW MINES */}
+            {/* LOOPING THROUGH THE DIV TO SHOW MINES */}
             {divs.map((_, index) => {
               const isClicked = clickedIndices.hasOwnProperty(index);
               return (
@@ -334,7 +364,10 @@ export default function Home() {
       { addMoneyButton && < AddMoney addButton={addButtonClicked} addAmount={addAmountField} addAmountOnChange={ (e:any) => setAddAmountField( e.target.value ) } /> }
 
       {/* WINNING COMPONENT */}
-      { winningPopUp && <Winning /> }
+      { winningPopUp && <Winning winningMultiplier="0.00" winningAmount="0.00"/> }
+
+      {/* WHEN A BOMB IS CLICKED */}
+      { bombClicked && <Winning winningMultiplier="0.00" winningAmount="0.00" /> }
 
     </>
   );
