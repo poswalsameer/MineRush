@@ -55,6 +55,8 @@ export default function Home() {
 
   const [betAmount, setBetAmount] = useState<string>("");
   const [bomb, SetBomb] = useState<string>("3");
+  const [gemCount, setGemCount] = useState<number>(0);
+  const [winAmount, setWinAmount] = useState<number>(0);
   const [bombCount, SetBombCount] = useState<number[]>([]);
 
   const [profit, setProfit] = useState<number>(0.0);
@@ -62,6 +64,8 @@ export default function Home() {
   const [clickedIndices, setClickedIndices] = useState<{
     [key: number]: "bomb" | "gem";
   }>({});
+
+  // let winAmount;
 
   //SETTING ISCLIENT TO TRUE WHEN THE COMPONENT LOADS ON CLIENT SIDE
   useEffect(() => {
@@ -165,6 +169,12 @@ export default function Home() {
         setWinningPopUp(false);
 
         setClickedIndices({});
+
+        setProfit(0);
+
+        setGemCount(0);
+
+        setWinAmount(0);
       }
     }
   };
@@ -173,6 +183,10 @@ export default function Home() {
   const cashoutClicked = () => {
     setActiveBet(false);
     setWinningPopUp(true);
+    const calculatedWinAmount = (profit * Number(betAmount)).toFixed(2);
+    setWinAmount(Number(calculatedWinAmount));
+    // setProfit(0);
+    // setWinAmount( profit * Number(betAmount) );
   };
 
   const clickingMine = (index: any) => {
@@ -184,6 +198,108 @@ export default function Home() {
     }
   };
 
+  //FUNCTION TO UPDATE MULTIPLIER ON EVERY MINE CLICK
+  const profitMultiplier = () => {
+
+    if( bomb === '1' ){
+      setProfit( oneBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '2' ){
+      setProfit( twoBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '3' ){
+      setProfit( threeBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '4' ){
+      setProfit( fourBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '5' ){
+      setProfit( fiveBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '6' ){
+      setProfit( sixBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '7' ){
+      setProfit( sevenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '8' ){
+      setProfit( eightBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '9' ){
+      setProfit( nineBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '10' ){
+      setProfit( tenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '11' ){
+      setProfit( elevenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '12' ){
+      setProfit( twelveBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '13' ){
+      setProfit( thirteenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '14' ){
+      setProfit( fourteenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '15' ){
+      setProfit( fifteenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '16' ){
+      setProfit( sixteenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '17' ){
+      setProfit( seventeenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '18' ){
+      setProfit( eighteenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '19' ){
+      setProfit( nineteenBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '20' ){
+      setProfit( twentyBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '21' ){
+      setProfit( twentyOneBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '22' ){
+      setProfit( twentyTwoBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '23' ){
+      setProfit( twentyThreeBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+    else if( bomb === '24' ){
+      setProfit( twentyFourBombArr[gemCount] );
+      // setWinAmount( profit * Number(betAmount) );
+    }
+
+  }
+
   //FUNCTION WHICH WILL WORK WHEN A MINE IS CLICKED, LOGGING TO THE CONSOLE
   const mineClicked = (index: number) => {
     console.log("Clicked index:", index);
@@ -194,15 +310,21 @@ export default function Home() {
     } else {
       setClickedIndices((prev) => ({ ...prev, [index]: "gem" }));
       console.log("Gem Clicked");
+      setGemCount( prev => prev + 1 );
+      profitMultiplier();
+
+      // setWinAmount( profit * Number(betAmount) );
     }
 
     if (bombCount.includes(index)) {
       setBombClicked(true);
       setActiveBet(false);
+      setProfit(0);
       console.log("bet has been set to false again");
-    }
-  };
+    } 
 
+  };
+  
   //array of length 25 to display all div boxes through loop
   const divs = Array.from({ length: 25 });
   // localStorage.clear();
@@ -212,6 +334,7 @@ export default function Home() {
   const closeAlertClicked = () => {
     setBetAmountAlert(false);
   };
+
 
   return (
     <>
@@ -375,68 +498,7 @@ export default function Home() {
                   );
                 }) }
 
-            {/* {bombClicked
-              ? divs.map((_, index) => {
-                  const isClicked = clickedIndices.hasOwnProperty(index);
-                  return (
-                    <div
-                      key={index}
-                      className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900"
-                      onClick={() => clickingMine(index)}
-                    >
-                      
-                    </div>
-                  );
-                })
-              : divs.map((_, index) => {
-                  const isClicked = clickedIndices.hasOwnProperty(index);
-                  return (
-                    <div
-                      key={index}
-                      className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900"
-                      onClick={() => clickingMine(index)}
-                    >
-                      {isClicked && (
-                        // Showing image of gem or bomb according to the index clicked
-                        <img
-                          src={
-                            clickedIndices[index] === "bomb"
-                              ? "bomb.png"
-                              : "gems.png"
-                          }
-                          alt={clickedIndices[index]}
-                          className={`${
-                            clickedIndices[index] === "bomb"
-                              ? "mr-1 image-size"
-                              : "ml-1"
-                          }`}
-                        />
-                      )}
-                    </div>
-                  );
-                })} */}
-
-            {/* { bombClicked ? {divs.map((_, index) => {
-              const isClicked = clickedIndices.hasOwnProperty(index);
-              return (
-                <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900" onClick={() => clickingMine(index)}>
-                  
-                </div>
-              );
-            })} : {divs.map((_, index) => {
-              const isClicked = clickedIndices.hasOwnProperty(index);
-              return (
-                <div key={index} className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900" onClick={() => clickingMine(index)}>
-                  {isClicked && (
-
-                    //SHOWING IMAGE OF GEM OR BOMB ACCORDING TO THE INDEX CLICKED
-                    <img src={clickedIndices[index] === 'bomb' ? 'bomb.png': 'gems.png'} alt={clickedIndices[index]} 
-                    className={`${clickedIndices[index] === 'bomb' ? 'mr-1 image-size' : 'ml-1'}`}
-                    />
-                  )}
-                </div>
-              );
-            })}  }  */}
+            
           </div>
         </div>
       </div>
@@ -451,7 +513,7 @@ export default function Home() {
 
       {/* WINNING COMPONENT */}
       {winningPopUp && (
-        <Winning winningMultiplier="0.00" winningAmount="0.00" />
+        <Winning winningMultiplier={profit} winningAmount= {winAmount} />
       )}
 
       {/* WHEN A BOMB IS CLICKED */}
