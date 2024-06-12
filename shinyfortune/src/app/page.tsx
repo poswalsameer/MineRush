@@ -45,6 +45,7 @@ export default function Home() {
   const [shuffleAllowed, setShuffleAllowed] = useState<boolean>(false);
   const [isClient, setIsClient] = useState<boolean>(false);
   const [isBombPresent, setIsBombPresent] = useState<boolean>(false);
+  const [maxWin, setMaxWin] = useState<boolean>(false);
 
   // const [amountInWallet, setAmountInWallet] = useState<number>(0);
 
@@ -58,6 +59,7 @@ export default function Home() {
   const [gemCount, setGemCount] = useState<number>(0);
   const [winAmount, setWinAmount] = useState<number>(0);
   const [bombCount, SetBombCount] = useState<number[]>([]);
+  const [maxWinAmount, setMaxWinAmount] = useState<number>(0);
 
   const [profit, setProfit] = useState<number>(0.0);
 
@@ -66,6 +68,9 @@ export default function Home() {
   }>({});
 
   // let winAmount;
+
+  const gems = 25 - Number(bomb);
+  // let maxWinAmount;
 
   //SETTING ISCLIENT TO TRUE WHEN THE COMPONENT LOADS ON CLIENT SIDE
   useEffect(() => {
@@ -173,6 +178,9 @@ export default function Home() {
         setProfit(0);
 
         setGemCount(0);
+
+        setMaxWin(false);
+        console.log("Number of gems:", gems);
 
         setWinAmount(0);
       }
@@ -311,6 +319,13 @@ export default function Home() {
       setClickedIndices((prev) => ({ ...prev, [index]: "gem" }));
       console.log("Gem Clicked");
       setGemCount( prev => prev + 1 );
+
+      if( gemCount === gems ){
+        // setMaxWin(true);
+        // console.log("all gems are clicked");
+        maxWinFunction();
+      }
+
       profitMultiplier();
 
       // setWinAmount( profit * Number(betAmount) );
@@ -324,7 +339,142 @@ export default function Home() {
     } 
 
   };
+
+  const maxWinFunction = () => {
+    setMaxWin(true);
+
+    if( bomb === '1' ){
+     const lastIndex = oneBombArr.length - 1;
+    //  maxWinAmount = oneBombArr[lastIndex] * Number(betAmount);
+     setMaxWinAmount(oneBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '2' ){
+      const lastIndex = twoBombArr.length - 1;
+    //  maxWinAmount = twoBombArr[lastIndex] * Number(betAmount); 
+     setMaxWinAmount(twoBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '3' ){
+      const lastIndex = threeBombArr.length - 1;
+      // maxWinAmount = threeBombArr[lastIndex] * Number(betAmount); 
+      setMaxWinAmount(threeBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '4' ){
+      const lastIndex = fourBombArr.length - 1;
+    //  maxWinAmount = fourBombArr[lastIndex] * Number(betAmount);
+    setMaxWinAmount(fourBombArr[lastIndex] * Number(betAmount))  
+    }
+    else if( bomb === '5' ){
+      const lastIndex = fiveBombArr.length - 1;
+    //  maxWinAmount = fiveBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(fiveBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '6' ){
+      const lastIndex = sixBombArr.length - 1;
+      // maxWinAmount = sixBombArr[lastIndex] * Number(betAmount); 
+      setMaxWinAmount(sixBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '7' ){
+      const lastIndex = sevenBombArr.length - 1;
+    //  maxWinAmount = sevenBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(sevenBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '8' ){
+      const lastIndex = eightBombArr.length - 1;
+    //  maxWinAmount = eightBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(eightBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '9' ){
+      const lastIndex = nineBombArr.length - 1;
+    //  maxWinAmount = nineBombArr[lastIndex] * Number(betAmount);
+    setMaxWinAmount(nineBombArr[lastIndex] * Number(betAmount))  
+    }
+    else if( bomb === '10' ){
+      const lastIndex = tenBombArr.length - 1;
+    //  maxWinAmount = tenBombArr[lastIndex] * Number(betAmount);
+    setMaxWinAmount(tenBombArr[lastIndex] * Number(betAmount))  
+    }
+    else if( bomb === '11' ){
+      const lastIndex = elevenBombArr.length - 1;
+    //  maxWinAmount = elevenBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(elevenBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '12' ){
+      const lastIndex = twelveBombArr.length - 1;
+    //  maxWinAmount = twelveBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(twelveBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '13' ){
+      const lastIndex = thirteenBombArr.length - 1;
+    //  maxWinAmount = thirteenBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(thirteenBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '14' ){
+      const lastIndex = fourteenBombArr.length - 1;
+    //  maxWinAmount = fourteenBombArr[lastIndex] * Number(betAmount);
+    setMaxWinAmount(fourteenBombArr[lastIndex] * Number(betAmount))  
+    }
+    else if( bomb === '15' ){
+      const lastIndex = fifteenBombArr.length - 1;
+    //  maxWinAmount = fifteenBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(fifteenBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '16' ){
+      const lastIndex = sixteenBombArr.length - 1;
+    //  maxWinAmount = sixteenBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(sixteenBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '17' ){
+      const lastIndex = seventeenBombArr.length - 1;
+    //  maxWinAmount = seventeenBombArr[lastIndex] * Number(betAmount);
+    setMaxWinAmount(seventeenBombArr[lastIndex] * Number(betAmount))  
+    }
+    else if( bomb === '18' ){
+      const lastIndex = eighteenBombArr.length - 1;
+    //  maxWinAmount = eighteenBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(eighteenBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '19' ){
+      const lastIndex = nineteenBombArr.length - 1;
+      // maxWinAmount = nineteenBombArr[lastIndex] * Number(betAmount); 
+      setMaxWinAmount(nineteenBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '20' ){
+      const lastIndex = twentyBombArr.length - 1;
+    //  maxWinAmount = twentyBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(twentyBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '21' ){
+      const lastIndex = twentyOneBombArr.length - 1;
+    //  maxWinAmount = twentyOneBombArr[lastIndex] * Number(betAmount);
+    setMaxWinAmount(twentyOneBombArr[lastIndex] * Number(betAmount))  
+    }
+    else if( bomb === '22' ){
+      const lastIndex = twentyTwoBombArr.length - 1;
+    //  maxWinAmount = twentyTwoBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(twentyTwoBombArr[lastIndex] * Number(betAmount)) 
+    }
+    else if( bomb === '23' ){
+      const lastIndex = twentyThreeBombArr.length - 1;
+      // maxWinAmount = twentyThreeBombArr[lastIndex] * Number(betAmount);
+      setMaxWinAmount(twentyThreeBombArr[lastIndex] * Number(betAmount))  
+    }
+    else if( bomb === '24' ){
+      const lastIndex = twentyFourBombArr.length - 1;
+    //  maxWinAmount = twentyFourBombArr[lastIndex] * Number(betAmount); 
+    setMaxWinAmount(twentyFourBombArr[lastIndex] * Number(betAmount)) 
+    }
+    
+    setActiveBet(false);
+ 
+    console.log("All gems are clicked"); 
+  }
   
+  useEffect(() => {
+    if (gemCount === gems) {
+      maxWinFunction();
+    }
+  }, [gemCount]);
+
   //array of length 25 to display all div boxes through loop
   const divs = Array.from({ length: 25 });
   // localStorage.clear();
@@ -476,7 +626,12 @@ export default function Home() {
                     <div
                       key={index}
                       className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900"
-                      onClick={() => clickingMine(index)}
+                      // onClick={() => clickingMine(index)}
+                      onClick={() => {
+                        if (!isClicked) {
+                          clickingMine(index);
+                        }
+                      }}
                     >
                       {isClicked && (
                         // Showing image of gem or bomb according to the index clicked
@@ -510,6 +665,9 @@ export default function Home() {
           addAmountOnChange={(e: any) => setAddAmountField(e.target.value)}
         />
       )}
+
+      {/* MAX WIN COMPONENT */}
+      { maxWin && ( <Winning winningMultiplier={profit} winningAmount= {maxWinAmount} /> ) }
 
       {/* WINNING COMPONENT */}
       {winningPopUp && (
