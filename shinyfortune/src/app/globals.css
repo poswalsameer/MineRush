@@ -75,6 +75,10 @@
     }
   }
 
+  /* body{
+    background-image: linear-gradient(#557086, #192833, #0f212e);
+  } */
+
   .image-size {
     width: 55px; 
     height: 55px; 
