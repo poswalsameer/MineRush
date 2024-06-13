@@ -5,9 +5,6 @@ import { useEffect, useState } from "react";
 import AddMoney from "./components/AddMoney";
 import Winning from "./components/Winning";
 import { Wallet } from 'lucide-react';
-// import betSound from '../../public/betSound.mp3';
-// import bombImage from './public/bomb.png';
-// import gemImage from './public/gem.png';
 import {
   oneBombArr,
   twoBombArr,
@@ -35,7 +32,6 @@ import {
   twentyFourBombArr,
 } from "./utils/multiplier";
 
-// import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import AlertBox from "./components/AlertBox";
 import ReShuffle from "./components/ReShuffle";
 
@@ -51,8 +47,7 @@ export default function Home() {
   const [maxWin, setMaxWin] = useState<boolean>(false);
   const [reshuffling, setReshuffling] = useState<boolean>(false);
   const [greaterBet, setGreaterBet] = useState<boolean>(false);
-
-  // const [amountInWallet, setAmountInWallet] = useState<number>(0);
+  const [negativeBet, setNegativeBet] = useState<boolean>(false);
 
   //STATE FOR AMOUNT SHOWING IN WALLET AND ALSO SAVING IT IN THE LOCAL STORAGE FOR FUTURE USE
   const [amountInWallet, setAmountInWallet] = useState<number | null>(null);
@@ -72,14 +67,14 @@ export default function Home() {
     [key: number]: "bomb" | "gem";
   }>({});
 
-  // let winAmount;
+  //AUDIOS USED 
   let betSound = new Audio('betButtonSound.mp3');
   let bombSound = new Audio('bombSound.mp3');
   let gemSound = new Audio('gemSound.mp3');
   let cashoutSound = new Audio('cashoutSound.mp3');
 
+  //CALCULATING THE NUMBER OF GEMS
   const gems = 25 - Number(bomb);
-  // let maxWinAmount;
 
   //SETTING ISCLIENT TO TRUE WHEN THE COMPONENT LOADS ON CLIENT SIDE
   useEffect(() => {
@@ -108,7 +103,6 @@ export default function Home() {
 
   //FUNCTION WHICH IS HANDLING THE ADD BUTTON ON ADD MONEY COMPONENT AND ADDING THE AMOUNT TO WALLET
   const addButtonClicked = () => {
-    // setAmountInWallet( prev => prev! + Number(addAmountField) );
 
     // FUNCTION THAT SETS THE WALLET AMOUNT UPTO 2 DECIMAL PLACES AFTER ADDING MONEY IN THE WALLET
     setAmountInWallet((prevAmount) => {
@@ -141,9 +135,13 @@ export default function Home() {
       setBetAmountAlert(true);
       console.log("bet amount is not entered");
     } else {
-      if (amountInWallet !== null && amountInWallet >= Number(betAmount)) {
-        // setAmountInWallet( prev => prev! - Number(betAmount) );
 
+      if( Number(betAmount) < 0 ){
+        setNegativeBet(true);
+      }
+
+      else if (amountInWallet !== null && amountInWallet >= Number(betAmount)) {
+      
         //LOGIC TO IMPLEMENT THE WALLET BALANCE UPTO 2 DECIMAL PLACES AFTER SUBTRACTING THE AMOUNT IN WALLET WITH BET AMOUNT
         setAmountInWallet((prevAmount) => {
           let updatedAmountInWallet;
@@ -169,7 +167,7 @@ export default function Home() {
             bombArr.push(randomNumber);
           }
         }
-        console.log("Generated bomb array:", bombArr);
+        // console.log("Generated bomb array:", bombArr);
         SetBombCount(bombArr);
 
         //SWITCHING OFF THE BET BUTTON WHEN THE USER STARTS A BET
@@ -179,20 +177,13 @@ export default function Home() {
 
         //SWITCHING ON THE SHUFFLING BUTTON WHEN THE USER STARTS A BET
         setShuffleAllowed(true);
-
         setWinningPopUp(false);
-
         setClickedIndices({});
-
         setProfit(1);
-
         setGemCount(0);
-
         setMaxWin(false);
         console.log("Number of gems:", gems);
-
         setWinAmount(0);
-
         betSound.play();        
       }
       else{
@@ -206,18 +197,14 @@ export default function Home() {
     setActiveBet(false);
     setWinningPopUp(true);
     const calculatedWinAmount = (profit * Number(betAmount)).toFixed(2);
-    setAmountInWallet( (prev) => (prev! + Number(calculatedWinAmount)) )
+    setAmountInWallet((prev) => Number((prev! + Number(calculatedWinAmount)).toFixed(2)));
     setWinAmount(Number(calculatedWinAmount));
 
+    //WHEN CASHOUT BUTTON CLICKED, THIS SOUND PLAYS
     cashoutSound.play();
-    // setProfit(0);
-    // setWinAmount( profit * Number(betAmount) );
   };
 
   const clickingMine = (index: any) => {
-    // () => mineClicked(index)
-
-    //mine is clickable only when a bet is active
     if (activeBet) {
       mineClicked(index);
     }
@@ -340,14 +327,11 @@ export default function Home() {
       gemSound.play();
 
       if( gemCount === gems ){
-        // setMaxWin(true);
-        // console.log("all gems are clicked");
         maxWinFunction();
       }
 
       profitMultiplier();
 
-      // setWinAmount( profit * Number(betAmount) );
     }
 
     if (bombCount.includes(index)) {
@@ -496,13 +480,13 @@ export default function Home() {
 
   //array of length 25 to display all div boxes through loop
   const divs = Array.from({ length: 25 });
-  // localStorage.clear();
 
   console.log(bombCount);
 
   const closeAlertClicked = () => {
     setBetAmountAlert(false);
     setGreaterBet(false);
+    setNegativeBet(false);
   };
 
   const reshuffleClicked = () => {
@@ -525,7 +509,7 @@ export default function Home() {
       >
         <h1 className="my-6 text-5xl text-[#a4bcd3] font-extrabold">
           {" "}
-          SHINY FORTUNE{" "}
+          MineRush{" "}
         </h1>
 
         {/* WALLET LAYOUT AND UI */}
@@ -539,7 +523,7 @@ export default function Home() {
           </div>
 
           <div className=" h-full w-[18%] text-xl font-bold flex justify-center items-center bg-[#00E701] hover:bg-[#1FFF20] rounded-r-lg hover:cursor-pointer ">
-            <button onClick={addMoneyButtonClicked}>+</button>
+            <button className="h-full w-full" onClick={addMoneyButtonClicked}>+</button>
           </div>
         </div>
 
@@ -548,32 +532,28 @@ export default function Home() {
           <div className=" flex flex-col justify-center items-center ml-10 h-[26rem] w-[30rem] bg-[#213743] text-[#a4bcd3] rounded-2xl">
             {/* BET AMOUNT FIELD */}
             <div className="w-full flex flex-row justify-between items-center my-5 ">
-              {/* <div className="w-1/2 "> */}
+              
               <p className=" ml-20 text-lg font-bold">Bet Amount</p>
-              {/* </div> */}
-
-              {/* <div className="w-1/2"> */}
+              
               <input
                 type="number"
-                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] focus:outline-none hover:cursor-pointer"
+                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] focus:outline-none hover:cursor-pointer "
                 value={betAmount}
                 onChange={(e) => setBetAmount(e.target.value)}
                 disabled={activeBet}
               />
-              {/* </div> */}
+              
             </div>
 
             {/* NUMBER OF MINES FIELD */}
             <div className="w-full flex flex-row justify-between items-center my-5">
-              {/* <div className="w-1/2"> */}
+              
               <p className="ml-20 text-lg font-bold">Mines</p>
-              {/* </div> */}
-
-              {/* <div className="w-1/2"> */}
+                            
               <select
                 name="mine"
                 id="min"
-                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] focus:outline-none hover:cursor-pointer"
+                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] focus:outline-none hover:cursor-pointer "
                 value={bomb}
                 disabled={activeBet}
                 onChange={(e) => SetBomb(e.target.value)}
@@ -603,14 +583,14 @@ export default function Home() {
                 <option value="23">23</option>
                 <option value="24">24</option>
               </select>
-              {/* </div> */}
+              
             </div>
 
             {/* PROFIT BOX */}
             <div className="w-full flex flex-row justify-between items-center my-5 ">
               <p className=" ml-20 text-lg font-bold">Profit</p>
 
-              <div className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] hover:cursor-pointer">
+              <div className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] hover:cursor-pointer ">
                 {profit}x
               </div>
             </div>
@@ -619,14 +599,15 @@ export default function Home() {
 
             {activeBet ? (
               <button
-                className="h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-lg"
+                className="h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-md shadow-sm shadow-green-950"
                 onClick={cashoutClicked}
               >
                 CASHOUT
               </button>
             ) : (
               <button
-                className={`h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-lg`}
+                className={`h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-md shadow-sm shadow-green-950`}
+                
                 onClick={betButtonClicked}
                 disabled={activeBet}
               >
@@ -636,7 +617,7 @@ export default function Home() {
 
             {/* BUTTON FOR RE SHUFFLE THE BOARD */}
             <button
-              className={ `h-10 w-80 my-2 bg-[#0F212E] font-bold text-[#a4bcd3] rounded-lg ${ activeBet ? 'transition-all ease-in-out delay-50 hover:border-[0.5px]' : '' } `}
+              className={ `h-10 w-80 my-2 bg-[#0F212E] font-bold text-[#a4bcd3] rounded-md ${ activeBet ? 'transition-all ease-in-out delay-50 hover:border-[0.5px]' : '' } `}
               disabled={!activeBet}
               onClick={reshuffleClicked}
             >
@@ -657,7 +638,6 @@ export default function Home() {
                     <div
                       key={index}
                       className={ `h-20 w-20 bg-[#2f4553] flex justify-center items-center rounded-lg hover:cursor-pointer mineField ${ isClicked ? 'mineClicked' : '' } `}
-                      // onClick={() => clickingMine(index)}
                       onClick={() => {
                         if (!isClicked) {
                           clickingMine(index);
@@ -711,6 +691,8 @@ export default function Home() {
       {betAmountAlert && <AlertBox alertTitle="No Bet Amount Set" alertDescription='Please set a bet amount (atleast 0)' closeAlertBox={closeAlertClicked} />}
 
       { greaterBet && < AlertBox alertTitle="Low Balance" alertDescription='Insufficient balance in the wallet' closeAlertBox={closeAlertClicked} /> }
+
+      { negativeBet && < AlertBox alertTitle="Negative Bet" alertDescription='Bet amount cannot be less than 0' closeAlertBox={closeAlertClicked} /> }
 
       { reshuffling && < ReShuffle />  }
       
