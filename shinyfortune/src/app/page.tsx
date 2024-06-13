@@ -35,6 +35,7 @@ import {
 
 // import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import AlertBox from "./components/AlertBox";
+import ReShuffle from "./components/ReShuffle";
 
 export default function Home() {
   const [addMoneyButton, setAddMoneyButton] = useState(false);
@@ -46,6 +47,7 @@ export default function Home() {
   const [isClient, setIsClient] = useState<boolean>(false);
   const [isBombPresent, setIsBombPresent] = useState<boolean>(false);
   const [maxWin, setMaxWin] = useState<boolean>(false);
+  const [reshuffling, setReshuffling] = useState<boolean>(false);
 
   // const [amountInWallet, setAmountInWallet] = useState<number>(0);
 
@@ -485,6 +487,16 @@ export default function Home() {
     setBetAmountAlert(false);
   };
 
+  const reshuffleClicked = () => {
+    setReshuffling(true);
+
+    setTimeout( () => {
+
+      setReshuffling(false);
+
+    }, 2000 )
+  }
+
 
   return (
     <>
@@ -513,7 +525,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="my-4 h-[33rem] w-[80rem] bg-blue-950 rounded-xl flex flex-row justify-between items-center">
+        <div className={`my-4 h-[33rem] w-[80rem] bg-blue-950 rounded-xl flex flex-row justify-between items-center ${ reshuffling ? 'blur-sm' : '' } `}>
           {/* bet amount wala box */}
           <div className=" flex flex-col justify-center items-center ml-10 h-[26rem] w-[30rem] bg-green-800 rounded-2xl">
             {/* BET AMOUNT FIELD */}
@@ -607,7 +619,8 @@ export default function Home() {
             {/* BUTTON FOR RE SHUFFLE THE BOARD */}
             <button
               className="h-10 w-80 my-2 bg-yellow-950 text-white rounded-lg"
-              disabled={!shuffleAllowed}
+              disabled={!activeBet}
+              onClick={reshuffleClicked}
             >
               Re-Shuffle Board
             </button>
@@ -617,7 +630,7 @@ export default function Home() {
           <div
             className={`grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl ${
               winningPopUp ? "blur-sm" : ""
-            } ${bombClicked ? "blur-sm" : ""} `}
+            } ${bombClicked ? "blur-sm" : ""} ${maxWin ? 'blur-sm' : '' } `}
           >
             {/* LOOPING THROUGH THE DIV TO SHOW MINES */}
             { divs.map((_, index) => {
@@ -678,6 +691,9 @@ export default function Home() {
       {bombClicked && <Winning winningMultiplier="0.00" winningAmount="0.00" />}
 
       {betAmountAlert && <AlertBox closeAlertBox={closeAlertClicked} />}
+
+      { reshuffling && < ReShuffle />  }
+      
     </>
   );
 }
