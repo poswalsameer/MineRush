@@ -503,41 +503,108 @@ export default function Home() {
   return (
     <>
       <div
-        className={`h-screen w-full bg-[#1A2C38] flex flex-col justify-center items-center ${
+        className={`md:h-screen md:w-full md:bg-[#1A2C38] md:flex md:flex-col md:justify-center md:items-center
+        
+        lg:h-screen lg:w-full lg:bg-[#1A2C38] lg:flex lg:flex-col lg:justify-center lg:items-center
+        
+        xl:h-screen xl:w-full xl:bg-[#1A2C38] xl:flex xl:flex-col xl:justify-center xl:items-center
+        
+        2xl:h-screen 2xl:w-full 2xl:bg-[#1A2C38] 2xl:flex 2xl:flex-col 2xl:justify-center 2xl:items-center ${
           addMoneyButton ? "blur-sm" : ""
         } ${betAmountAlert ? "blur-sm" : ""} `}
       >
-        <h1 className="my-6 text-5xl text-[#a4bcd3] font-extrabold">
+        <h1 className="md:my-12 md:text-5xl md:text-[#a4bcd3] md:font-extrabold
+        
+        lg:my-6 lg:text-5xl lg:text-[#a4bcd3] lg:font-extrabold
+        
+        xl:my-6 xl:text-5xl xl:text-[#a4bcd3] xl:font-extrabold
+        
+        2xl:my-6 2xl:text-5xl 2xl:text-[#a4bcd3] 2xl:font-extrabold">
           {" "}
           MineRush{" "}
         </h1>
 
         {/* WALLET LAYOUT AND UI */}
-        <div className="top-12 right-16 h-12 w-64 bg-[#1475E1] rounded-lg absolute flex justify-center items-center">
-          <div className="flex justify-center items-center h-full w-[25%]">
+        <div className="md:top-36 md:right-[35.2%] md:h-10 md:w-56 md:rounded-lg md:absolute md:flex md:justify-center md:items-center
+        
+        lg:top-12 lg:right-12 lg:h-10 lg:w-56 lg:rounded-lg lg:absolute lg:flex lg:justify-center lg:items-center
+        
+        xl:top-12 xl:right-16 xl:h-12 xl:w-64 xl:rounded-lg xl:absolute xl:flex xl:justify-center xl:items-center
+        
+        2xl:top-12 2xl:right-16 2xl:h-12 2xl:w-64 2xl:rounded-lg 2xl:absolute 2xl:flex 2xl:justify-center 2xl:items-center">
+
+          <div className="md:flex md:justify-center md:items-center md:h-full md:w-[25%] md:bg-[#1475E1] md:rounded-l-lg
+          
+          lg:flex lg:justify-center lg:items-center lg:h-full lg:w-[25%] lg:bg-[#1475E1] lg:rounded-l-lg
+          
+          xl:flex xl:justify-center xl:items-center xl:h-full xl:w-[25%] xl:bg-[#1475E1] xl:rounded-l-lg
+          
+          2xl:flex 2xl:justify-center 2xl:items-center 2xl:h-full 2xl:w-[25%] 2xl:bg-[#1475E1] 2xl:rounded-l-lg">
             <Wallet color="#ffffff" />
           </div>
           
-          <div className=" h-full w-[57%] bg-[#0f212e] text-[#a4bcd3] font-bold flex justify-center items-center overflow-hidden">
-            <h1 className="px-10">{amountInWallet}</h1>
+          <div className="md:h-full md:w-[57%] md:bg-[#0f212e] md:text-[#a4bcd3] md:font-bold md:flex md:justify-center md:items-center md:overflow-hidden
+          
+          lg:h-full lg:w-[57%] lg:bg-[#0f212e] lg:text-[#a4bcd3] lg:font-bold lg:flex lg:justify-center lg:items-center lg:overflow-hidden 
+          
+          xl:h-full xl:w-[57%] xl:bg-[#0f212e] xl:text-[#a4bcd3] xl:font-bold xl:flex xl:justify-center xl:items-center xl:overflow-hidden 
+          
+          2xl:h-full 2xl:w-[57%] 2xl:bg-[#0f212e] 2xl:text-[#a4bcd3] 2xl:font-bold 2xl:flex 2xl:justify-center 2xl:items-center 2xl:overflow-hidden">
+            <h1 className="lg:px-10 xl:px-10 2xl:px-10">{amountInWallet}</h1>
           </div>
 
-          <div className=" h-full w-[18%] text-xl font-bold flex justify-center items-center bg-[#00E701] hover:bg-[#1FFF20] rounded-r-lg hover:cursor-pointer ">
+          <div className="md:h-full md:w-[18%] md:text-xl md:font-bold md:flex md:justify-center md:items-center md:bg-[#00E701] md:hover:bg-[#1FFF20] md:rounded-r-lg md:hover:cursor-pointer
+          
+          lg:h-full lg:w-[18%] lg:text-xl lg:font-bold lg:flex lg:justify-center lg:items-center lg:bg-[#00E701] lg:hover:bg-[#1FFF20] lg:rounded-r-lg lg:hover:cursor-pointer 
+          
+          xl:h-full xl:w-[18%] xl:text-xl xl:font-bold xl:flex xl:justify-center xl:items-center xl:bg-[#00E701] xl:hover:bg-[#1FFF20] xl:rounded-r-lg xl:hover:cursor-pointer 
+          
+          2xl:h-full 2xl:w-[18%] 2xl:text-xl 2xl:font-bold 2xl:flex 2xl:justify-center 2xl:items-center 2xl:bg-[#00E701] 2xl:hover:bg-[#1FFF20] 2xl:rounded-r-lg 2xl:hover:cursor-pointer ">
             <button className="h-full w-full" onClick={addMoneyButtonClicked}>+</button>
           </div>
         </div>
 
-        <div className={`my-4 h-[33rem] w-[80rem] bg-[#0f212e] rounded-xl flex flex-row justify-between items-center shadow-2xl ${ reshuffling ? 'blur-sm' : '' } `}>
-          {/* bet amount wala box */}
-          <div className=" flex flex-col justify-center items-center ml-10 h-[26rem] w-[30rem] bg-[#213743] text-[#a4bcd3] rounded-2xl">
+        <div className={`md:my-20 md:h-[31rem] md:w-[44rem] md:bg-[#0f212e] md:rounded-xl md:flex md:flex-row md:justify-between md:items-center md:shadow-2xl
+        
+        lg:my-4 lg:h-[33rem] lg:w-[58rem] lg:bg-[#0f212e] lg:rounded-xl lg:flex lg:flex-row lg:justify-between lg:items-center lg:shadow-2xl
+        
+        xl:my-4 xl:h-[33rem] xl:w-[75rem] xl:bg-[#0f212e] xl:rounded-xl xl:flex xl:flex-row xl:justify-between xl:items-center xl:shadow-2xl
+        
+        2xl:my-4 2xl:h-[33rem] 2xl:w-[80rem] 2xl:bg-[#0f212e] 2xl:rounded-xl 2xl:flex 2xl:flex-row 2xl:justify-between 2xl:items-center 2xl:shadow-2xl ${ reshuffling ? 'blur-sm' : '' } `}>
+          {/* BET AMOUNT WALA BOX*/}
+          <div className="md:flex md:flex-col md:justify-center md:items-center md:ml-6 md:h-[21rem] md:w-[17.5rem] md:bg-[#213743] md:text-[#a4bcd3] md:rounded-xl
+          
+          lg:flex lg:flex-col lg:justify-center lg:items-center lg:ml-10 lg:h-[26rem] lg:w-[22rem] lg:bg-[#213743] lg:text-[#a4bcd3] lg:rounded-2xl
+          
+          xl:flex xl:flex-col xl:justify-center xl:items-center xl:ml-10 xl:h-[26rem] xl:w-[30rem] xl:bg-[#213743] xl:text-[#a4bcd3] xl:rounded-2xl 
+          
+          2xl:flex 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:ml-10 2xl:h-[26rem] 2xl:w-[30rem] 2xl:bg-[#213743] 2xl:text-[#a4bcd3] 2xl:rounded-2xl">
             {/* BET AMOUNT FIELD */}
-            <div className="w-full flex flex-row justify-between items-center my-5 ">
+            <div className="md:w-full md:flex md:flex-row md:justify-between md:items-center md:my-5 
+            
+            lg:w-full lg:flex lg:flex-row lg:justify-between lg:items-center lg:my-5 
+            
+            xl:w-full xl:flex xl:flex-row xl:justify-between xl:items-center xl:my-5 
+            
+            2xl:w-full 2xl:flex 2xl:flex-row 2xl:justify-between 2xl:items-center 2xl:my-5 ">
               
-              <p className=" ml-20 text-lg font-bold">Bet Amount</p>
+              <p className="md:ml-8 md:text-sm md:font-bold
+              
+              lg:ml-12 lg:text-md lg:font-bold
+              
+              xl:ml-20 xl:text-lg xl:font-bold 
+              
+              2xl:ml-20 2xl:text-lg 2xl:font-bold">Bet Amount</p>
               
               <input
                 type="number"
-                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] focus:outline-none hover:cursor-pointer "
+                className="md:mr-10 md:h-8 md:w-28 md:p-1 md:text-xs md:border-2 md:border-[#557086] md:rounded-sm md:text-white md:font-bold md:bg-[#0F212E] md:focus:outline-none md:hover:cursor-pointer
+                
+                lg:mr-12 lg:h-9 lg:w-36 lg:p-2 lg:text-sm lg:border-2 lg:border-[#557086] lg:rounded-md lg:text-white lg:font-bold lg:bg-[#0F212E] lg:focus:outline-none lg:hover:cursor-pointer
+                
+                xl:mr-20 xl:h-9 xl:w-44 xl:p-2 xl:text-sm xl:border-2 xl:border-[#557086] xl:rounded-md xl:text-white xl:font-bold xl:bg-[#0F212E] xl:focus:outline-none xl:hover:cursor-pointer
+                
+                2xl:mr-20 2xl:h-9 2xl:w-44 2xl:p-2 2xl:text-sm 2xl:border-2 2xl:border-[#557086] 2xl:rounded-md 2xl:text-white 2xl:font-bold 2xl:bg-[#0F212E] 2xl:focus:outline-none 2xl:hover:cursor-pointer "
                 value={betAmount}
                 onChange={(e) => setBetAmount(e.target.value)}
                 disabled={activeBet}
@@ -546,14 +613,32 @@ export default function Home() {
             </div>
 
             {/* NUMBER OF MINES FIELD */}
-            <div className="w-full flex flex-row justify-between items-center my-5">
+            <div className="md:w-full md:flex md:flex-row md:justify-between md:items-center md:my-5
+            
+            lg:w-full lg:flex lg:flex-row lg:justify-between lg:items-center lg:my-5
+            
+            xl:w-full xl:flex xl:flex-row xl:justify-between xl:items-center xl:my-5
+            
+            2xl:w-full 2xl:flex 2xl:flex-row 2xl:justify-between 2xl:items-center 2xl:my-5">
               
-              <p className="ml-20 text-lg font-bold">Mines</p>
+              <p className="md:ml-8 md:text-sm md:font-bold
+              
+              lg:ml-12 lg:text-md lg:font-bold
+              
+              xl:ml-20 xl:text-lg xl:font-bold
+              
+              2xl:ml-20 2xl:text-lg 2xl:font-bold">Mines</p>
                             
               <select
                 name="mine"
                 id="min"
-                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] focus:outline-none hover:cursor-pointer "
+                className="md:mr-10 md:h-8 md:w-28 md:p-1 md:text-xs md:border-2 md:border-[#557086] md:rounded-sm md:text-white md:font-bold md:bg-[#0F212E] 
+                
+                lg:mr-12 lg:h-9 lg:w-36 lg:p-2 lg:text-sm lg:border-2 lg:border-[#557086] lg:rounded-md lg:text-white lg:font-bold lg:bg-[#0F212E] 
+                
+                xl:mr-20 xl:h-9 xl:w-44 xl:p-2 xl:text-sm xl:border-2 xl:border-[#557086] xl:rounded-md xl:text-white xl:font-bold xl:bg-[#0F212E] 
+                
+                2xl:mr-20 2xl:h-9 2xl:w-44 2xl:p-2 2xl:text-sm 2xl:border-2 2xl:border-[#557086] 2xl:rounded-md 2xl:text-white 2xl:font-bold 2xl:bg-[#0F212E] focus:outline-none hover:cursor-pointer "
                 value={bomb}
                 disabled={activeBet}
                 onChange={(e) => SetBomb(e.target.value)}
@@ -587,10 +672,29 @@ export default function Home() {
             </div>
 
             {/* PROFIT BOX */}
-            <div className="w-full flex flex-row justify-between items-center my-5 ">
-              <p className=" ml-20 text-lg font-bold">Profit</p>
+            <div className="md:w-full md:flex md:flex-row md:justify-between md:items-center md:my-5
+            
+            lg:w-full lg:flex lg:flex-row lg:justify-between lg:items-center lg:my-5
+            
+            xl:w-full xl:flex xl:flex-row xl:justify-between xl:items-center xl:my-5
+            
+            2xl:w-full 2xl:flex 2xl:flex-row 2xl:justify-between 2xl:items-center 2xl:my-5 ">
 
-              <div className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E] hover:cursor-pointer ">
+              <p className="md:ml-8 md:text-sm md:font-bold
+              
+              lg:ml-12 lg:text-md lg:font-bold 
+              
+              xl:ml-20 xl:text-lg xl:font-bold 
+              
+              2xl:ml-20 2xl:text-lg 2xl:font-bold">Profit</p>
+
+              <div className="md:mr-10 md:h-8 md:w-28 md:p-1 md:text-xs  md:border-2 md:border-[#557086] md:rounded-sm md:text-white md:font-bold md:bg-[#0F212E]
+              
+              lg:mr-12 lg:h-9 lg:w-36 lg:p-2 lg:text-sm lg:border-2 lg:border-[#557086] lg:rounded-md lg:text-white lg:font-bold lg:bg-[#0F212E]
+              
+              xl:mr-20 xl:h-9 xl:w-44 xl:p-2 xl:text-sm xl:border-2 xl:border-[#557086] xl:rounded-md xl:text-white xl:font-bold xl:bg-[#0F212E]
+              
+              2xl:mr-20 2xl:h-9 2xl:w-44 2xl:p-2 2xl:text-sm 2xl:border-2 2xl:border-[#557086] 2xl:rounded-md 2xl:text-white 2xl:font-bold 2xl:bg-[#0F212E] flex items-center  hover:cursor-pointer ">
                 {profit}x
               </div>
             </div>
@@ -599,14 +703,26 @@ export default function Home() {
 
             {activeBet ? (
               <button
-                className="h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-md shadow-sm shadow-green-950"
+                className="md:h-9 md:w-48 md:my-5 md:bg-[#00E701] md:hover:bg-[#1FFF20] md:font-bold md:text-black md:rounded-md
+                
+                lg:h-10 lg:w-64 lg:my-5 lg:bg-[#00E701] lg:hover:bg-[#1FFF20] lg:font-bold lg:text-black lg:rounded-md
+                
+                xl:h-10 xl:w-80 xl:my-5 xl:bg-[#00E701] xl:hover:bg-[#1FFF20] xl:font-bold xl:text-black xl:rounded-md
+                
+                2xl:h-10 2xl:w-80 2xl:my-5 2xl:bg-[#00E701] 2xl:hover:bg-[#1FFF20] 2xl:font-bold 2xl:text-black 2xl:rounded-md shadow-sm shadow-green-950"
                 onClick={cashoutClicked}
               >
                 CASHOUT
               </button>
             ) : (
               <button
-                className={`h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-md shadow-sm shadow-green-950`}
+                className={`md:h-9 md:w-48 md:my-5 md:bg-[#00E701] md:hover:bg-[#1FFF20] md:font-bold md:text-black md:rounded-md
+                
+                lg:h-10 lg:w-64 lg:my-5 lg:bg-[#00E701] lg:hover:bg-[#1FFF20] lg:font-bold lg:text-black lg:rounded-md
+                
+                xl:h-10 xl:w-80 xl:my-5 xl:bg-[#00E701] xl:hover:bg-[#1FFF20] xl:font-bold xl:text-black xl:rounded-md
+                
+                2xl:h-10 2xl:w-80 2xl:my-5 2xl:bg-[#00E701] 2xl:hover:bg-[#1FFF20] 2xl:font-bold 2xl:text-black 2xl:rounded-md shadow-sm shadow-green-950`}
                 
                 onClick={betButtonClicked}
                 disabled={activeBet}
@@ -617,7 +733,13 @@ export default function Home() {
 
             {/* BUTTON FOR RE SHUFFLE THE BOARD */}
             <button
-              className={ `h-10 w-80 my-2 bg-[#0F212E] font-bold text-[#a4bcd3] rounded-md ${ activeBet ? 'transition-all ease-in-out delay-50 hover:border-[0.5px]' : '' } `}
+              className={ `md:h-9 md:w-48 md:my-2 md:bg-[#0F212E] md:font-bold md:text-xs md:text-[#a4bcd3] md:rounded-md
+              
+              lg:h-10 lg:w-64 lg:my-2 lg:bg-[#0F212E] lg:font-bold lg:text-[#a4bcd3] lg:rounded-md lg:text-base
+              
+              xl:h-10 xl:w-80 xl:my-2 xl:bg-[#0F212E] xl:font-bold xl:text-[#a4bcd3] xl:rounded-md xl:text-base
+              
+              2xl:h-10 2xl:w-80 2xl:my-2 2xl:bg-[#0F212E] 2xl:font-bold 2xl:text-[#a4bcd3] 2xl:rounded-md 2xl:text-base ${ activeBet ? 'transition-all ease-in-out delay-50 hover:border-[0.5px]' : '' } `}
               disabled={!activeBet}
               onClick={reshuffleClicked}
             >
@@ -625,9 +747,15 @@ export default function Home() {
             </button>
           </div>
 
-          {/* grid wala box */}
+          {/* GRID WALA BOX */}
           <div
-            className={`grid grid-rows-5 grid-cols-5 gap-y-7 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl ${
+            className={`md:grid md:grid-rows-5 md:grid-cols-5 md:gap-y-3 md:justify-items-center md:items-center md:mr-6 md:h-[21rem] md:w-[22rem] md:rounded-2xl
+            
+            lg:grid lg:grid-rows-5 lg:grid-cols-5 lg:gap-y-6 lg:justify-items-center lg:items-center lg:mr-14 lg:h-[27rem] lg:w-[26rem] lg:rounded-2xl
+            
+            xl:grid xl:grid-rows-5 xl:grid-cols-5 xl:gap-y-7 xl:justify-items-center xl:items-center xl:mr-20 xl:h-[27rem] xl:w-[31rem] xl:rounded-2xl
+            
+            2xl:grid 2xl:grid-rows-5 2xl:grid-cols-5 2xl:gap-y-7 2xl:justify-items-center 2xl:items-center 2xl:mr-20 2xl:h-[27rem] 2xl:w-[31rem] 2xl:rounded-2xl ${
               winningPopUp ? "blur-sm" : ""
             } ${bombClicked ? "blur-sm" : ""} ${maxWin ? 'blur-sm' : '' } `}
           >
@@ -637,7 +765,13 @@ export default function Home() {
                   return (
                     <div
                       key={index}
-                      className={ `h-20 w-20 bg-[#2f4553] flex justify-center items-center rounded-lg hover:cursor-pointer mineField ${ isClicked ? 'mineClicked' : '' } `}
+                      className={ `md:h-[3.6rem] md:w-[3.6rem] md:bg-[#2f4553] md:flex md:justify-center md:items-center md:rounded-md
+                      
+                      lg:h-[4.7rem] lg:w-[4.7rem] lg:bg-[#2f4553] lg:flex lg:justify-center lg:items-center lg:rounded-lg
+                      
+                      xl:h-20 xl:w-20 xl:bg-[#2f4553] xl:flex xl:justify-center xl:items-center xl:rounded-lg
+                      
+                      2xl:h-20 2xl:w-20 2xl:bg-[#2f4553] 2xl:flex 2xl:justify-center 2xl:items-center 2xl:rounded-lg hover:cursor-pointer mineField ${ isClicked ? 'mineClicked' : '' } `}
                       onClick={() => {
                         if (!isClicked) {
                           clickingMine(index);
@@ -655,8 +789,8 @@ export default function Home() {
                           alt={clickedIndices[index]}
                           className={`${
                             clickedIndices[index] === "bomb"
-                              ? "mr-1 image-size"
-                              : "ml-1"
+                              ? "md:mr-1 lg:mr-1 xl:mr-1 2xl:mr-1 image-size"
+                              : "md:ml-1 lg:ml-1 xl:ml-1 2xl:ml-1"
                           }`}
                         />
                       )}
