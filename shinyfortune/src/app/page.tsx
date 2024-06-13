@@ -525,9 +525,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={`my-4 h-[33rem] w-[80rem] bg-blue-950 rounded-xl flex flex-row justify-between items-center ${ reshuffling ? 'blur-sm' : '' } `}>
+        <div className={`my-4 h-[33rem] w-[80rem] bg-[#0f212e] rounded-xl flex flex-row justify-between items-center ${ reshuffling ? 'blur-sm' : '' } `}>
           {/* bet amount wala box */}
-          <div className=" flex flex-col justify-center items-center ml-10 h-[26rem] w-[30rem] bg-green-800 rounded-2xl">
+          <div className=" flex flex-col justify-center items-center ml-10 h-[26rem] w-[30rem] bg-[#213743] text-[#a4bcd3] rounded-2xl">
             {/* BET AMOUNT FIELD */}
             <div className="w-full flex flex-row justify-between items-center my-5 ">
               {/* <div className="w-1/2 "> */}
@@ -537,7 +537,7 @@ export default function Home() {
               {/* <div className="w-1/2"> */}
               <input
                 type="number"
-                className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black"
+                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E]"
                 value={betAmount}
                 onChange={(e) => setBetAmount(e.target.value)}
                 disabled={activeBet}
@@ -555,7 +555,7 @@ export default function Home() {
               <select
                 name="mine"
                 id="min"
-                className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black"
+                className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E]"
                 value={bomb}
                 disabled={activeBet}
                 onChange={(e) => SetBomb(e.target.value)}
@@ -592,7 +592,7 @@ export default function Home() {
             <div className="w-full flex flex-row justify-between items-center my-5 ">
               <p className=" ml-20 text-lg font-bold">Profit</p>
 
-              <div className="mr-20 h-9 w-44 p-2 text-sm border border-white rounded-md text-white font-bold bg-black">
+              <div className="mr-20 h-9 w-44 p-2 text-sm border-2 border-[#557086] rounded-md text-white font-bold bg-[#0F212E]">
                 {profit}x
               </div>
             </div>
@@ -601,14 +601,14 @@ export default function Home() {
 
             {activeBet ? (
               <button
-                className="h-10 w-80 my-5 bg-green-950 text-white rounded-lg"
+                className="h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-lg"
                 onClick={cashoutClicked}
               >
                 CASHOUT
               </button>
             ) : (
               <button
-                className={`h-10 w-80 my-5 bg-green-950 text-white rounded-lg`}
+                className={`h-10 w-80 my-5 bg-[#00E701] hover:bg-[#1FFF20] font-bold text-black rounded-lg`}
                 onClick={betButtonClicked}
                 disabled={activeBet}
               >
@@ -618,7 +618,7 @@ export default function Home() {
 
             {/* BUTTON FOR RE SHUFFLE THE BOARD */}
             <button
-              className="h-10 w-80 my-2 bg-yellow-950 text-white rounded-lg"
+              className={ `h-10 w-80 my-2 bg-red-500 font-bold text-black rounded-lg ${ activeBet ? 'hover:bg-red-600' : '' } `}
               disabled={!activeBet}
               onClick={reshuffleClicked}
             >
@@ -628,7 +628,7 @@ export default function Home() {
 
           {/* grid wala box */}
           <div
-            className={`grid grid-rows-5 grid-cols-5 gap-y-4 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl ${
+            className={`grid grid-rows-5 grid-cols-5 gap-y-7 justify-items-center items-center mr-20 h-[27rem] w-[31rem] rounded-2xl ${
               winningPopUp ? "blur-sm" : ""
             } ${bombClicked ? "blur-sm" : ""} ${maxWin ? 'blur-sm' : '' } `}
           >
@@ -638,7 +638,7 @@ export default function Home() {
                   return (
                     <div
                       key={index}
-                      className="h-20 w-20 bg-slate-800 flex justify-center items-center rounded-lg hover:cursor-pointer hover:border-2 hover:border-slate-900"
+                      className={ `h-20 w-20 bg-[#2f4553] flex justify-center items-center rounded-lg hover:cursor-pointer mineField ${ isClicked ? 'mineClicked' : '' } `}
                       // onClick={() => clickingMine(index)}
                       onClick={() => {
                         if (!isClicked) {
