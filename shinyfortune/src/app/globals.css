@@ -75,6 +75,12 @@
     }
   }
 
+  .image-size {
+    width: 55px; 
+    height: 55px; 
+    object-fit: cover;
+  }
+
   .loader-wrapper {
     /* width: 100%;
     height: 100%;
