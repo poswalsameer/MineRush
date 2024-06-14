@@ -101,8 +101,8 @@
   }
 
   .mineClicked{
-    box-shadow: 0 0;
-    background-color: #071824; 
+    box-shadow: 0 0 ;
+    background-color: #071824 !important; 
   }
 
   .mineClicked:hover{

@@ -851,17 +851,17 @@ export default function Home() {
                   return (
                     <div
                       key={index}
-                      className={ `h-[2.8rem] w-[2.8rem] bg-[#2f4553] flex justify-center items-center rounded-sm
+                      className={ `h-[2.8rem] w-[2.8rem] bg-[#2f4553] flex justify-center items-center rounded-sm mineField
                       
-                      sm:h-[3.4rem] sm:w-[3.4rem] sm:bg-[#2f4553] sm:flex sm:justify-center sm:items-center sm:rounded-sm
+                      sm:h-[3.4rem] sm:w-[3.4rem] sm:bg-[#2f4553] sm:flex sm:justify-center sm:items-center sm:rounded-sm sm:mineField
                       
-                      md:h-[3.2rem] md:w-[3.2rem] md:bg-[#2f4553] md:flex md:justify-center md:items-center md:rounded-md
+                      md:h-[3.2rem] md:w-[3.2rem] md:bg-[#2f4553] md:flex md:justify-center md:items-center md:rounded-md md:mineField
                       
-                      lg:h-[4.2rem] lg:w-[4.2rem] lg:bg-[#2f4553] lg:flex lg:justify-center lg:items-center lg:rounded-lg
+                      lg:h-[4.2rem] lg:w-[4.2rem] lg:bg-[#2f4553] lg:flex lg:justify-center lg:items-center lg:rounded-lg lg:mineField
                       
-                      xl:h-[4.5rem] xl:w-[4.5rem] xl:bg-[#2f4553] xl:flex xl:justify-center xl:items-center xl:rounded-lg
+                      xl:h-[4.5rem] xl:w-[4.5rem] xl:bg-[#2f4553] xl:flex xl:justify-center xl:items-center xl:rounded-lg xl:mineField
                       
-                      2xl:h-[4.5rem] 2xl:w-[4.5rem] 2xl:bg-[#2f4553] 2xl:flex 2xl:justify-center 2xl:items-center 2xl:rounded-lg hover:cursor-pointer mineField ${ isClicked ? 'mineClicked' : '' } `}
+                      2xl:h-[4.5rem] 2xl:w-[4.5rem] 2xl:bg-[#2f4553] 2xl:flex 2xl:justify-center 2xl:items-center 2xl:rounded-lg hover:cursor-pointer 2xl:mineField ${ isClicked ? 'mineClicked' : '' } `}
                       onClick={() => {
                         if (!isClicked) {
                           clickingMine(index);
@@ -887,8 +887,7 @@ export default function Home() {
                     </div>
                   );
                 }) }
-
-            
+ 
           </div>
         </div>
       </div>
