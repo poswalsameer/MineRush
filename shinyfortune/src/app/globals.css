@@ -79,6 +79,10 @@
     background-image: linear-gradient(#557086, #192833, #0f212e);
   } */
 
+  body{
+    background-color: #1A2C38;
+  }
+
   .image-size {
     width: 55px; 
     height: 55px; 
