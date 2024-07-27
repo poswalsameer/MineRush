@@ -1,1 +1,1 @@
-# Shiny-Fortune
+# MineRush
